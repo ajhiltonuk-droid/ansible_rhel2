@@ -11,7 +11,7 @@
 
     - name: Create a new user
       ansible.builtin.user:
-        name: roger
-        password: 1
+        name: fed
+        password: Monkey!2
         state: present
         create_home:  true
