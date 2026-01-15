@@ -11,11 +11,11 @@
     - name: Update all security packages
       ansible.builtin.package:
         name: '*'
-        state: {{package_state}}
-        security: {{security_only}}
+        state: "{{ package_state}}"
+        security: "{{ security_only }}"
 
     - name: Create a new user
       ansible.builtin.user:
-        name: {{user_name}}}
+        name: "{{user_name}}"
         state: present
         create_home:  true
