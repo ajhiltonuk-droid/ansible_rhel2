@@ -35,7 +35,7 @@
       ansible.builtin.service:
         name: firewalld
         state: started
-        enable: true 
+        enabled: true
       when: inventory_hostname in groups['web']
 
     - name: Allow HTTP traffic on web servers
