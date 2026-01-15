@@ -11,6 +11,45 @@
 
     - name: Create a new user
       ansible.builtin.user:
-        name: "{{user_name}}"
+        name: "{{ item }}"
         state: present
         create_home:  true
+      loop:
+        - alice
+        - bob
+        - carol
+
+    - name: Install Apache Web Server
+      ansible.builtin.package:
+        name: "{{package_name}}"
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Install Firdwalld
+      ansible.builtin.package:
+        name: firewalld
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Ensure Firewall is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enable: true 
+      when: inventory_hostname in groups['web']
+
+    - name: Allow HTTP traffic on web servers
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      when: inventory_hostname in groups['web']
+      notify: Reload Firewall
+
+
+  handlers:
+
+    - name: Reload Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
