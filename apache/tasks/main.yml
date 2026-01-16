@@ -3,7 +3,7 @@
 # tasks file for apache
 - name: Install Apache Web Server
   ansible.builtin.package:
-    name: "{{package_name}}"
+    name: "{{apache_package_name}}"
     state: present
   when: inventory_hostname in groups['web']
 
